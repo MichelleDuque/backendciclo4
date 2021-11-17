@@ -1,59 +1,49 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
-
   scalar Date
-
-  enum Enum_EstadoUsuario{
+  enum Enum_EstadoUsuario {
     PENDIENTE
     AUTORIZADO
     NO_AUTORIZADO
   }
-
   enum Enum_Rol {
-    ESTUDIANTE,
+    ESTUDIANTE
     LIDER
     ADMINISTRADOR
   }
-
-  enum Enum_EstadoProyecto{
+  enum Enum_EstadoProyecto {
     ACTIVO
     INACTIVO
   }
-
-  enum Enum_FaseProyecto{
+  enum Enum_FaseProyecto {
     INICIADO
     DESARROLLO
     TERMINADO
     NULO
   }
-
-  enum Enum_TipoObjetivo{
+  enum Enum_TipoObjetivo {
     GENERAL
     ESPECIFICO
   }
-
   type Usuario {
     _id: ID!
     nombre: String!
     apellido: String!
     identificacion: String!
     correo: String!
-    estado: Enum_EstadoUsuario
     rol: Enum_Rol!
+    estado: Enum_EstadoUsuario
   }
-
   type Objetivo {
     _id: ID!
     descripcion: String!
     tipo: Enum_TipoObjetivo!
   }
-
   input crearObjetivo {
     descripcion: String!
     tipo: Enum_TipoObjetivo!
   }
-
   type Proyecto {
     _id: ID!
     nombre: String!
@@ -65,21 +55,20 @@ const typeDefs = gql`
     lider: Usuario!
     objetivos: [Objetivo]
   }
-  
   type Query {
     Usuarios: [Usuario]
-    Usuario(_id:String!):Usuario
+    Usuario(_id: String!): Usuario
     Proyectos: [Proyecto]
   }
-
-  type Mutation{
+  type Mutation {
+    
     crearUsuario(
       nombre: String!
       apellido: String!
       identificacion: String!
       correo: String!
-      estado: Enum_EstadoUsuario
       rol: Enum_Rol!
+      estado: Enum_EstadoUsuario
     ): Usuario
 
     editarUsuario(
@@ -88,15 +77,11 @@ const typeDefs = gql`
       apellido: String!
       identificacion: String!
       correo: String!
-      estado: Enum_EstadoUsuario
       rol: Enum_Rol!
+      estado: Enum_EstadoUsuario
     ): Usuario
 
-    eliminarUsuario(
-      _id:String
-      correo:String
-    ): Usuario
-
+    eliminarUsuario(_id: String, correo: String): Usuario
     crearProyecto(
       nombre: String!
       presupuesto: Float!

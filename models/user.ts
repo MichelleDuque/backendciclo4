@@ -15,12 +15,19 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
     unique: true,
-    validate:{
-      validator: (email)=>{
+    validate: {
+      validator: (email) => {
         return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
       },
-      message: "El formato del correo electronico esta malo"
-    }
+      // (email) => {
+      //   if (email.includes('@') && email.includes('.')) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // },
+      message: 'El formato del correo electrónico está malo.',
+    },
   },
   identificacion: {
     type: String,
@@ -44,7 +51,7 @@ const userSchema = new Schema<User>({
     type: String,
     enum: Enum_EstadoUsuario,
     default: Enum_EstadoUsuario.PENDIENTE,
-  }
+  },
 });
 
 const UserModel = model('User', userSchema);
