@@ -1,7 +1,7 @@
 import conectarDB from "./db/db";
-import { UserModel } from "./models/user";
-import { Enum_EstadoUsuario, Enum_Rol, Enum_TipoObjetivo } from "./models/enums";
-import { ProjectModel } from "./models/project";
+import { UserModel } from "./models/usuario/usuario";
+import { Enum_EstadoUsuario, Enum_Rol, Enum_TipoObjetivo } from "./models/enums/enums";
+import { ProjectModel } from "./models/proyecto/proyecto";
 import { ObjectiveModel } from "./models/objective";
 
 
@@ -13,8 +13,8 @@ const crearProyectoConObjetivos3 = async ()=>{
     apellido: "Abello",
     correo: "edgar@hotmail.com",
     identificacion: "1224",
-    rol: Enum_Rol.administrador,
-    estado: Enum_EstadoUsuario.autorizado,
+    rol: Enum_Rol.ADMINISTRADOR,
+    estado: Enum_EstadoUsuario.AUTORIZADO,
   });
 
   const Proyecto = await ProjectModel.create({
@@ -24,9 +24,9 @@ const crearProyectoConObjetivos3 = async ()=>{
     presupuesto: 120000,
     lider: usuarioInicial._id,
     objetivos: [
-      {descripcion: "Este es el objetivo general", tipo: Enum_TipoObjetivo.general},
-      {descripcion: "Este es el objetivo especifico 1", tipo: Enum_TipoObjetivo.especifico},
-      {descripcion: "Este es el objetivo especifico 2", tipo: Enum_TipoObjetivo.especifico},
+      {descripcion: "Este es el objetivo general", tipo: Enum_TipoObjetivo.GENERAL},
+      {descripcion: "Este es el objetivo especifico 1", tipo: Enum_TipoObjetivo.ESPECIFICO},
+      {descripcion: "Este es el objetivo especifico 2", tipo: Enum_TipoObjetivo.ESPECIFICO},
     ],
   });
 }
