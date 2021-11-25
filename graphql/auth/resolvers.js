@@ -44,6 +44,12 @@ const resolversAutenticacion = {
         };
       }
     },
+    // VALIDAR TOKEN
+    validateToken: async (parent, args, context) => {
+      console.log('contexto', context);
+      // valdiar que el contexto tenga info del usuario. si si, refrescar el token
+      // si no devolver null para que en el front redirija al login.
+    },
   },
 };
 
