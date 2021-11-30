@@ -1,12 +1,18 @@
 import { ProjectModel } from './proyecto.js';
 
+
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args, context) => {
       const proyectos = await ProjectModel.find();
       return proyectos;
     },
+    Proyecto: async (parent, args) => {
+      const proyecto = await ProjectModel.findOne({ _id: args._id });
+      return proyecto;
+    },
   },
+
   Mutation: {
     crearProyecto: async (parent, args, context) => {
       const proyectoCreado = await ProjectModel.create({
