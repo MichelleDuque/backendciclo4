@@ -10,6 +10,10 @@ const resolverInscripciones = {
       const inscripcion = await InscriptionModel.findOne({ _id: args._id });
       return inscripcion;
     },
+    InscripcionesNoAprobadas: async () => {
+      const inscripcionesNoAprobadas = await InscriptionModel.find({ estado: 'PENDIENTE' }).populate('estudiante');
+      return inscripcionesNoAprobadas;
+    },
   },
 
   Mutation: {
