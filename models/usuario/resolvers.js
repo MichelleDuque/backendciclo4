@@ -33,6 +33,10 @@ const resolversUsuario = {
       ]);
       return usuario;
     },
+    Estudiantes: async () => {
+      const estudiantesRegistrados = await UserModel.find({ rol: 'ESTUDIANTE' }).populate('rol');
+      return estudiantesRegistrados;
+    },
   },
   Mutation: {
     crearUsuario: async (parent, args) => {

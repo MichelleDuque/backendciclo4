@@ -28,6 +28,7 @@ const resolversAvance = {
         args._id,
         {
           observaciones: args.observaciones,
+          descripcion: args.descripcion,
         },
         { new: true }
       );
