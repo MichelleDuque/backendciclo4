@@ -48,19 +48,6 @@ const resolversProyecto = {
 
       return proyectoConObjetivo;
     },
-    editarObjetivo: async (parent, args) => {
-      const proyectoEditado = await ProjectModel.findByIdAndUpdate(
-        args.idProyecto,
-        {
-          $set: {
-            [`objetivos.${args.indexObjetivo}.descripcion`]: args.campos.descripcion,
-            [`objetivos.${args.indexObjetivo}.tipo`]: args.campos.tipo,
-          },
-        },
-        { new: true }
-      );
-      return proyectoEditado;
-    },
     eliminarObjetivo: async (parent, args) => {
       const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
         { _id: args.idProyecto },
