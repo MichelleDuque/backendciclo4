@@ -1,21 +1,38 @@
+import { ProjectModel } from '../proyecto/proyecto.js';
+import { UserModel } from '../usuario/usuario.js';
 import { InscriptionModel } from './inscripcion.js';
 
 const resolverInscripciones = {
-  Query: {
-    Inscripciones: async (parent, args) => {
-      const inscripciones = await InscriptionModel.find();
-      return inscripciones;
+  Inscripcion: {
+    proyecto: async (parent, args, context) => {
+      return await ProjectModel.findOne({ _id: parent.proyecto });
     },
-    Inscripcion: async (parent, args) => {
-      const inscripcion = await InscriptionModel.findOne({ _id: args._id });
-      return inscripcion;
-    },
-    InscripcionesNoAprobadas: async () => {
-      const inscripcionesNoAprobadas = await InscriptionModel.find({ estado: 'PENDIENTE' }).populate('estudiante');
-      return inscripcionesNoAprobadas;
+    estudiante: async (parent, args, context) => {
+      return await UserModel.findOne({ _id: parent.estudiante });
     },
   },
+  Query: {
+    Inscripciones: async (parent, args, context) => {
+      let filtro = {};
+      if (context.userData) {
+        if (context.userData.rol === 'LIDER') {
+          const projects = await ProjectModel.find({ lider: '61ae935c1e4e5f4ac57e9010' });
+          const projectList = projects.map((p) => p._id.toString());
+          filtro = {
+            proyecto: {
+              $in: projectList,
+            },
+          };
+        }
+      }
+      const inscripciones = await InscriptionModel.find({ ...filtro });
+      return inscripciones;
+    },
 
+    // inscripcionesNoAprobadas: async () => {
+    //   const ina = await InscriptionModel.find({ estado: 'PENDIENTE' }).populate('estudiante');
+    // },
+  },
   Mutation: {
     crearInscripcion: async (parent, args) => {
       const inscripcionCreada = await InscriptionModel.create({

@@ -18,7 +18,7 @@ const resolversProyecto = {
       return inscripciones;
     },
   },
-  
+
   Mutation: {
     crearProyecto: async (parent, args, context) => {
       const proyectoCreado = await ProjectModel.create({
