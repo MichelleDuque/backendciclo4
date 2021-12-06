@@ -11,8 +11,14 @@ const resolversProyecto = {
       const proyecto = await ProjectModel.findOne({ _id: args._id });
       return proyecto;
     },
+    inscripciones: async (parent, args, context) => {
+      const inscripciones = await InscriptionModel.find({
+        proyecto: parent._id,
+      });
+      return inscripciones;
+    },
   },
-
+  
   Mutation: {
     crearProyecto: async (parent, args, context) => {
       const proyectoCreado = await ProjectModel.create({
