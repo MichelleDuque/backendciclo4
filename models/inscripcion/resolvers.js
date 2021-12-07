@@ -16,7 +16,7 @@ const resolverInscripciones = {
       let filtro = {};
       if (context.userData) {
         if (context.userData.rol === 'LIDER') {
-          const projects = await ProjectModel.find({ lider: '61ae935c1e4e5f4ac57e9010' });
+          const projects = await ProjectModel.find({ lider: context.userData._id });
           const projectList = projects.map((p) => p._id.toString());
           filtro = {
             proyecto: {
