@@ -1,26 +1,13 @@
-import { InscriptionModel } from '../inscripcion/inscripcion.js';
-import { UserModel } from '../usuario/usuario.js';
 import { ProjectModel } from './proyecto.js';
-
 const resolversProyecto = {
-  Proyecto: {
-    lider: async (parent, args, context) => {
-      const usr = await UserModel.findOne({
-        _id: parent.lider.toString(),
-      });
-      return usr;
-    },
-    inscripciones: async (parent, args, context) => {
-      const inscripciones = await InscriptionModel.find({
-        proyecto: parent._id,
-      });
-      return inscripciones;
-    },
-  },
   Query: {
     Proyectos: async (parent, args, context) => {
-      const proyectos = await ProjectModel.find();
+      const proyectos = await ProjectModel.find().populate("lider");
       return proyectos;
+    },
+    Proyecto: async (parent, args) => {
+      const proyecto = await ProjectModel.findOne({ _id: args._id });
+      return proyecto;
     },
   },
   Mutation: {
@@ -41,7 +28,6 @@ const resolversProyecto = {
         { ...args.campos },
         { new: true }
       );
-
       return proyectoEditado;
     },
     crearObjetivo: async (parent, args) => {
@@ -54,7 +40,6 @@ const resolversProyecto = {
         },
         { new: true }
       );
-
       return proyectoConObjetivo;
     },
     editarObjetivo: async (parent, args) => {
@@ -86,5 +71,4 @@ const resolversProyecto = {
     },
   },
 };
-
 export { resolversProyecto };
