@@ -5,6 +5,12 @@ const resolversProyecto = {
       const proyectos = await ProjectModel.find().populate("lider");
       return proyectos;
     },
+    inscripciones: async (parent, args, context) => {
+      const inscripciones = await InscriptionModel.find({
+        proyecto: parent._id,
+      });
+      return inscripciones;
+    },
     Proyecto: async (parent, args) => {
       const proyecto = await ProjectModel.findOne({ _id: args._id });
       return proyecto;
