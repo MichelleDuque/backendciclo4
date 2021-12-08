@@ -1,9 +1,14 @@
+import { InscriptionModel } from '../inscripcion/inscripcion.js';
+import { UserModel } from '../usuario/usuario.js';
 import { ProjectModel } from './proyecto.js';
+
 const resolversProyecto = {
-  Query: {
-    Proyectos: async (parent, args, context) => {
-      const proyectos = await ProjectModel.find().populate("lider");
-      return proyectos;
+  Proyecto: {
+    lider: async (parent, args, context) => {
+      const usr = await UserModel.findOne({
+        _id: parent.lider.toString(),
+      });
+      return usr;
     },
     inscripciones: async (parent, args, context) => {
       const inscripciones = await InscriptionModel.find({
@@ -11,9 +16,11 @@ const resolversProyecto = {
       });
       return inscripciones;
     },
-    Proyecto: async (parent, args) => {
-      const proyecto = await ProjectModel.findOne({ _id: args._id });
-      return proyecto;
+  },
+  Query: {
+    Proyectos: async (parent, args, context) => {
+      const proyectos = await ProjectModel.find();
+      return proyectos;
     },
   },
   Mutation: {
