@@ -15,7 +15,7 @@ const resolversAutenticacion = {
         rol: args.rol,
         password: hashedPassword,
       });
-      console.log('usuario creado', usuarioCreado);
+      // console.log('usuario creado', usuarioCreado);
       return {
         token: generateToken({
           _id: usuarioCreado._id,
@@ -39,13 +39,14 @@ const resolversAutenticacion = {
             identificacion: usuarioEcontrado.identificacion,
             correo: usuarioEcontrado.correo,
             rol: usuarioEcontrado.rol,
+            estado:usuarioEcontrado.estado
           }),
         };
       }
     },
 
     refreshToken: async (parent, args, context) => {
-      console.log('contexto', context);
+      // console.log('contexto', context);
       if (!context.userData) {
         return {
           error: 'token no valido',
@@ -59,6 +60,7 @@ const resolversAutenticacion = {
             identificacion: context.userData.identificacion,
             correo: context.userData.correo,
             rol: context.userData.rol,
+            estado:context.userData.estado
           }),
         };
       }
