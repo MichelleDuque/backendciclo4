@@ -22,6 +22,23 @@ const resolversProyecto = {
       const proyectos = await ProjectModel.find();
       return proyectos;
     },
+    ProyectosLider: async (parent, args, context) => {
+      let filtro = {};
+      if (context.userData) {
+        if (context.userData.rol === 'LIDER') {
+          const projects = await ProjectModel.find({ lider: context.userData._id });
+          // return projects;
+          const projectList = projects.map((p) => p._id.toString());
+          filtro = {
+            proyecto: {
+              $in: projectList,
+            },
+          };
+        }
+      }
+      const proyectos = await ProjectModel.find({ ...filtro });
+      return proyectos;
+    },
   },
   Mutation: {
     crearProyecto: async (parent, args, context) => {
