@@ -19,8 +19,30 @@ const resolversUsuario = {
       return usuarios;
     },
     Usuario: async (parent, args) => {
-      const usuario = await UserModel.findOne({ _id: args._id });
+      const usuario = await UserModel.findOne({ _id: args._id }).populate([
+        {
+          path: 'inscripciones',
+          populate: {
+            path: 'proyecto',
+            populate: [{ path: 'lider' }, { path: 'avances' }],
+          },
+        },
+        {
+          path: 'proyectosLiderados',
+        },
+        {
+          path: 'avancesCreados',
+          populate: {
+            path: 'proyecto',
+            populate: [{ path: 'lider' }],
+          },
+        },
+      ]);
       return usuario;
+    },
+    Estudiantes: async () => {
+      const estudiantesRegistrados = await UserModel.find({ rol: 'ESTUDIANTE' }).populate('rol');
+      return estudiantesRegistrados;
     },
   },
   Mutation: {
