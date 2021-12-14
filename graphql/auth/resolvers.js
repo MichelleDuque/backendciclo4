@@ -15,7 +15,7 @@ const resolversAutenticacion = {
         rol: args.rol,
         password: hashedPassword,
       });
-      console.log('usuario creado', usuarioCreado);
+      // console.log('usuario creado', usuarioCreado);
       return {
         token: generateToken({
           _id: usuarioCreado._id,
